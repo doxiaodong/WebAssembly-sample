@@ -13,4 +13,4 @@
 
 * https://github.com/WebAssembly/wabt
 
-https://github.com/WebAssembly/binaryen
+* https://github.com/WebAssembly/binaryen
