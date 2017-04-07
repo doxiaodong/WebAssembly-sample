@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>js-api Fibonacci</title>
+</head>
+<body>
+  <h3 id="time"></h3>
+  <div id="output"></div>
+
+  <script src="./fib.js"></script>
+  <script src="../../loader.js"></script>
+  <script>
+    
+    document.addEventListener('DOMContentLoaded', init)
+    const imports = {
+      methods: {
+        fib: fibFn
+      }
+    }
+
+    async function init() {
+      const instance = await loadWebAssembly('./index.wasm', imports)
+      const { testFib } = instance.exports
+
+      test(testFib)
+    }
+
+    function test(fib) {
+      const time = document.getElementById('time')
+      const output = document.getElementById('output')
+
+      const result = []
+      const begin = performance.now()
+      for (let i = 0; i <= 35; i++) {
+        result[i] = fib(i)
+      }
+      const end = performance.now()
+      time.innerHTML = `${end - begin} ms`
+
+      let outputInnerHTML = ''
+      result.forEach((value, index) => {
+        outputInnerHTML += `<div>fib(${index}) = ${value}</div>`
+      })
+      output.innerHTML = outputInnerHTML
+    }
+  </script>
+</body>
+</html>
